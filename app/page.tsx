@@ -2,8 +2,8 @@
 
 export default function Home() {
   return (
-    <div>
+    <main className="w-full flex-1">
       
-    </div>
+    </main>
   );
 }

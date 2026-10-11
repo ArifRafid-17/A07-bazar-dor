@@ -5,6 +5,8 @@ import NavBar from "./components/Nav";
 import NavCategory from "./NavCategory/NavCategory";
 import { Suspense } from "react";
 import { CategorySkeleton } from "./NavCategory/CategorySkeleton";
+import Marquee from "./Marquee/Marquee";
+import { MarqueeSkeleton } from "./Marquee/MarqueeSkeleton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +34,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <NavBar />
         <Suspense fallback={<CategorySkeleton />}>
           <NavCategory />
+        </Suspense>
+        <Suspense fallback={<MarqueeSkeleton />}>
+          <Marquee />
         </Suspense>
         
         {children}
