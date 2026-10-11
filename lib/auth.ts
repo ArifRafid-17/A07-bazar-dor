@@ -7,7 +7,14 @@ const client = new MongoClient(mongoUrl);
 const db = client.db("bazar-dor");
 
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  secret: process.env.BETTER_AUTH_SECRET || "bazar-dor-app-auth-session-secret-key-32-chars",
+  baseURL:
+    process.env.BETTER_AUTH_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "http://localhost:3000"),
   socialProviders: {
     google: {
       clientId: (process.env.GOOGLE_CLIENT_ID || "") as string,
