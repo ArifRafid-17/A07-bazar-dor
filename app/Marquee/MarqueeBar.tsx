@@ -89,12 +89,12 @@ export const MarqueeBar: React.FC<MarqueeBarProps> = ({ products }) => {
                 </span>
 
                 {/* Product Name */}
-                <span className="font-semibold text-gray-800 text-[13.5px] sm:text-sm">
+                <span className="font-bold text-gray-900 text-sm sm:text-[14.5px]">
                   {p.nameBn}
                 </span>
 
                 {/* Price & Unit */}
-                <span className="font-medium text-gray-700 text-[13px] sm:text-[13.5px]">
+                <span className="font-semibold text-gray-700 text-sm sm:text-[14px]">
                   {toBengaliNumber(p.today)} টাকা/{getBengaliUnit(p.unit)}
                 </span>
 

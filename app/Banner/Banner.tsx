@@ -63,7 +63,7 @@ export const Banner: React.FC<BannerProps> = ({
           {/* Left Text Content */}
           <div className="flex-1 flex flex-col items-start text-left z-10 max-w-2xl">
             {/* Date Pill */}
-            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#edf7f0] border border-[#d8eedf] text-[#168941] text-xs sm:text-[13px] font-medium select-none mb-3 sm:mb-4">
+            <div className="inline-flex items-center px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-[#edf7f0] border border-[#d8eedf] text-[#168941] text-sm sm:text-[15px] font-semibold select-none mb-3 sm:mb-4">
               <span>{displayDate}</span>
             </div>
 

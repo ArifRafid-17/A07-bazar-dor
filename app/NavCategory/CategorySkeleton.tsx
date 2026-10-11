@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const CategorySkeleton = () => {
   return (
     <div className="w-full bg-white border-b border-gray-100">

@@ -1,4 +1,6 @@
+import { Suspense } from 'react';
 import { CategoryBar, Category } from './CategoryBar';
+import { CategorySkeleton } from './CategorySkeleton';
 
 async function getCategories(): Promise<Category[]> {
   try {
@@ -20,7 +22,11 @@ const NavCategory = async () => {
   if (!data || data.length === 0) {
     return null;
   }
-  return <CategoryBar categories={data} />;
+  return (
+    <Suspense fallback={<CategorySkeleton />}>
+      <CategoryBar categories={data} />
+    </Suspense>
+  );
 };
 
 export default NavCategory;

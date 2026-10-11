@@ -88,7 +88,7 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
               <select
                 id="sort-select"
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e) => setSortBy(e.target.value as 'default' | 'price-asc' | 'price-desc')}
                 className="appearance-none bg-gray-50 border border-gray-200 text-gray-700 text-xs sm:text-sm font-medium rounded-lg px-3 py-1.5 pr-8 focus:outline-none focus:ring-1 focus:ring-[#168941] cursor-pointer"
               >
                 <option value="default">ডিফল্ট</option>

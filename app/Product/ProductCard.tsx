@@ -21,14 +21,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     >
       {/* Top Details: Emoji/Image, Name, Unit */}
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform duration-200 select-none">
+        <div className="w-11 h-11 rounded-full bg-gray-50 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition-transform duration-200 select-none">
           {product.image || product.categoryIcon || '🛍️'}
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900 text-sm sm:text-[15px] leading-tight truncate group-hover:text-[#168941] transition-colors">
+          <h3 className="font-bold text-gray-900 text-[15px] sm:text-base leading-snug truncate group-hover:text-[#168941] transition-colors">
             {product.nameBn}
           </h3>
-          <p className="text-xs text-gray-400 font-normal mt-0.5">
+          <p className="text-sm sm:text-[14.5px] text-gray-600 font-medium mt-1">
             প্রতি {getBengaliUnit(product.unit)}
           </p>
         </div>
@@ -37,14 +37,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Bottom Row: Price & Change Badge */}
       <div className="mt-4 pt-1 flex items-end justify-between">
         <div>
-          <span className="text-[11px] text-gray-400 font-normal block leading-none mb-1">
+          <span className="text-xs sm:text-[13px] font-semibold text-gray-600 block leading-tight mb-1.5">
             আজকের দাম
           </span>
           <div className="flex items-baseline">
-            <span className="text-base sm:text-lg font-bold text-gray-900 leading-none">
+            <span className="text-lg sm:text-xl font-bold text-gray-900 leading-none">
               {toBengaliNumber(product.today)}
             </span>
-            <span className="text-xs font-normal text-gray-500 ml-1 leading-none">
+            <span className="text-xs sm:text-sm font-medium text-gray-600 ml-1 leading-none">
               টাকা
             </span>
           </div>
@@ -53,7 +53,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Change Badge */}
         {product.change && (
           <div
-            className={`inline-flex items-center gap-0.5 text-xs font-semibold px-2 py-0.5 rounded select-none ${
+            className={`inline-flex items-center gap-0.5 text-xs sm:text-[13px] font-semibold px-2 py-0.5 rounded select-none ${
               isUp
                 ? 'text-red-500 bg-red-50/70'
                 : isDown

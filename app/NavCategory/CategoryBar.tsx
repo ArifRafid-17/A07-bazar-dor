@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
@@ -15,7 +15,7 @@ interface CategoryBarProps {
   categories: Category[];
 }
 
-export const CategoryBar: React.FC<CategoryBarProps> = ({ categories }) => {
+export const CategoryBar = ({ categories }: CategoryBarProps) => {
   const searchParams = useSearchParams();
   const activeSlug = searchParams.get('category');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -115,3 +115,5 @@ export const CategoryBar: React.FC<CategoryBarProps> = ({ categories }) => {
     </div>
   );
 };
+
+export default CategoryBar;

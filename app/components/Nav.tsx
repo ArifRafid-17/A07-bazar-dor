@@ -2,6 +2,7 @@
 
 import React, { useSyncExternalStore } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const emptySubscribe = () => () => {};
 
@@ -34,8 +35,8 @@ const NavBar = () => {
         <div className="flex items-center justify-between h-16">
           
           {/* Logo & Brand Details */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-[#168941] flex items-center justify-center">
+          <Link href="/" className="flex items-center gap-3 cursor-pointer group">
+            <div className="w-10 h-10 rounded-lg bg-[#168941] flex items-center justify-center group-hover:bg-[#137637] transition-colors">
               <Image
                 src="/logo-icon.png"
                 alt="বাজার দর"
@@ -45,14 +46,14 @@ const NavBar = () => {
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-base sm:text-lg font-bold text-gray-900 leading-tight">
+              <span className="text-base sm:text-lg font-bold text-gray-900 leading-tight group-hover:text-[#168941] transition-colors">
                 বাজার দর
               </span>
               <span className="text-xs text-gray-500 font-medium">
                 {currentDate}
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Action Buttons */}
           <div className="flex items-center gap-4">

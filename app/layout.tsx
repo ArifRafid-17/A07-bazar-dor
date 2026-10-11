@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Serif_Bengali } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/Nav";
 import NavCategory from "./NavCategory/NavCategory";
@@ -8,14 +8,13 @@ import { CategorySkeleton } from "./NavCategory/CategorySkeleton";
 import Marquee from "./Marquee/Marquee";
 import { MarqueeSkeleton } from "./Marquee/MarqueeSkeleton";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import Footer from "./components/footer";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const notoSerifBengali = Noto_Serif_Bengali({
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-noto-serif-bengali",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,11 +25,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="bn"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${notoSerifBengali.variable} ${notoSerifBengali.className} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
+      <body className={`${notoSerifBengali.className} min-h-full flex flex-col bg-white text-gray-900`}>
         <NavBar />
         <Suspense fallback={<CategorySkeleton />}>
           <NavCategory />
@@ -41,13 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         
         {children}
 
-        {/* Footer */}
-        <footer className="w-full bg-[#fbfdfa] border-t border-gray-200/80 py-5 mt-auto select-none">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
-            <p>বাজার দর — প্রয়োজনীয় পণ্যের দাম এক নজরে।</p>
-            <p>সকল দর সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।</p>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   );

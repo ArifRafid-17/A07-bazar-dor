@@ -1,5 +1,32 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-noto-serif-bengali), "Noto Serif Bengali", serif;
+  --font-serif: var(--font-noto-serif-bengali), "Noto Serif Bengali", serif;
+}
+
+html {
+  font-size: 17px;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 17.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+body {
+  font-family: var(--font-noto-serif-bengali), "Noto Serif Bengali", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
