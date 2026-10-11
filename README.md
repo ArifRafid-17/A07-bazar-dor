@@ -5,8 +5,8 @@
 ---
 
 ## 🔗 লিঙ্কসমূহ (Submission Links)
-- **লাইভ ওয়েবসাইট (Live Link):** [https://a07-bazar-dor-chi.vercel.app]([https://a07-bazar-dor.vercel.app](https://a07-bazar-dor-chi.vercel.app/))
-- **গিটহাব রিপোজিটরি (GitHub Repository):** [https://github.com/ArifRafid-17/A07-bazar-dor](https://github.com/ArifRafid-17/A07-bazar-dor)
+- **লাইভ ওয়েবসাইট (Live Link):** [Live Demo](https://a07-bazar-dor-chi.vercel.app/)
+- **গিটহাব রিপোজিটরি (GitHub Repository):** [GitHub Repo](https://github.com/ArifRafid-17/A07-bazar-dor)
 
 ---
 
