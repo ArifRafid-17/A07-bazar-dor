@@ -40,6 +40,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </Suspense>
         
         {children}
+
+        {/* Footer */}
+        <footer className="w-full bg-[#fbfdfa] border-t border-gray-200/80 py-5 mt-auto select-none">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
+            <p>বাজার দর — প্রয়োজনীয় পণ্যের দাম এক নজরে।</p>
+            <p>সকল দর সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।</p>
+          </div>
+        </footer>
       </body>
     </html>
   );

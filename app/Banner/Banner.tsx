@@ -30,6 +30,8 @@ interface BannerProps {
   imageSrc?: string;
 }
 
+import { useSearchParams } from 'next/navigation';
+
 export const Banner: React.FC<BannerProps> = ({
   date,
   title = 'আজকের বাজারের দাম এক নজরে',
@@ -38,6 +40,9 @@ export const Banner: React.FC<BannerProps> = ({
   buttonHref = '#products',
   imageSrc = '/bazar-hero.png',
 }) => {
+  const searchParams = useSearchParams();
+  const category = searchParams.get('category');
+
   const dynamicDate = useSyncExternalStore(
     emptySubscribe,
     getBengaliDate,
@@ -45,6 +50,10 @@ export const Banner: React.FC<BannerProps> = ({
   );
 
   const displayDate = date || dynamicDate || 'মঙ্গলবার, ৬ অক্টোবর, ২০২৬';
+
+  if (category && category !== 'all') {
+    return null;
+  }
 
   return (
     <section aria-label="ব্যানার" className="w-full bg-[#f4f6f3] py-6 sm:py-8 md:py-10">

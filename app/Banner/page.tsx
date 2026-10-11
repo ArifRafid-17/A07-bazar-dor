@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Banner from './Banner';
-
 
 export default function BannerPage() {
   return (
     <main className="w-full">
-      <Banner />
-       
+      <Suspense fallback={null}>
+        <Banner />
+      </Suspense>
     </main>
   );
 }

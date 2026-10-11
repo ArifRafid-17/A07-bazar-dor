@@ -16,7 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <Link
-      href={`/Product/${product.id}`}
+      href={`/ProductDetails/${product.id}`}
       className="group bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-gray-200/80 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between cursor-pointer"
     >
       {/* Top Details: Emoji/Image, Name, Unit */}
