@@ -3,6 +3,7 @@
 import React, { useSyncExternalStore, useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useSession, signOut } from '@/lib/auth-client';
 
@@ -25,6 +26,7 @@ const getBengaliDate = () => {
 };
 
 const NavBar = () => {
+  const router = useRouter();
   const currentDate = useSyncExternalStore(
     emptySubscribe,
     getBengaliDate,
@@ -51,11 +53,13 @@ const NavBar = () => {
     try {
       await signOut();
       toast.success('সাইন আউট সফল হয়েছে!');
-      window.location.href = '/';
+      router.push('/');
+      router.refresh();
     } catch (err) {
       console.error('Sign out error:', err);
       toast.error('সাইন আউট করতে সমস্যা হয়েছে');
-      window.location.href = '/';
+      router.push('/');
+      router.refresh();
     }
   };
 

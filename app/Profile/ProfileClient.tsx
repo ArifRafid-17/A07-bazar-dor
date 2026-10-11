@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { useSession, signOut, updateUser } from '@/lib/auth-client';
 
 export default function ProfileClient() {
@@ -26,14 +27,16 @@ export default function ProfileClient() {
   const [errorMessage, setErrorMessage] = useState('');
 
   // Handle name update submission
-  const handleUpdate = async (e: React.SubmitEvent) => {
+  const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccessMessage('');
     setErrorMessage('');
 
     const trimmedName = name.trim();
     if (!trimmedName) {
-      setErrorMessage('দয়া করে আপনার নাম প্রদান করুন');
+      const err = 'দয়া করে আপনার নাম প্রদান করুন';
+      setErrorMessage(err);
+      toast.error(err);
       return;
     }
 
@@ -47,22 +50,29 @@ export default function ProfileClient() {
         });
 
         if (res?.error) {
-          setErrorMessage(res.error.message || 'নাম আপডেট করতে সমস্যা হয়েছে');
+          const err = res.error.message || 'নাম আপডেট করতে সমস্যা হয়েছে';
+          setErrorMessage(err);
+          toast.error(err);
         } else {
           setSavedDisplayName(trimmedName);
           setEditedName(trimmedName);
-          setSuccessMessage('নাম সফলভাবে আপডেট হয়েছে!');
+          const succ = 'নাম সফলভাবে আপডেট হয়েছে!';
+          setSuccessMessage(succ);
+          toast.success(succ);
           router.refresh();
         }
       } else {
         // Demo preview mode
         setSavedDisplayName(trimmedName);
         setEditedName(trimmedName);
-        setSuccessMessage('নাম সফলভাবে আপডেট হয়েছে! (ডেমো মোড)');
+        const succ = 'নাম সফলভাবে আপডেট হয়েছে! (ডেমো মোড)';
+        setSuccessMessage(succ);
+        toast.success(succ);
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'নাম আপডেট করতে সমস্যা হয়েছে';
       setErrorMessage(msg);
+      toast.error(msg);
     } finally {
       setIsUpdating(false);
     }
@@ -73,10 +83,14 @@ export default function ProfileClient() {
     setIsSigningOut(true);
     try {
       await signOut();
+      toast.success('সাইন আউট সফল হয়েছে!');
       router.push('/SignIn');
+      router.refresh();
     } catch (err) {
       console.error('Sign out failed:', err);
+      toast.error('সাইন আউট করতে সমস্যা হয়েছে');
       router.push('/SignIn');
+      router.refresh();
     } finally {
       setIsSigningOut(false);
     }

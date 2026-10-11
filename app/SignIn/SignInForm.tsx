@@ -1,16 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { signIn } from '@/lib/auth-client';
 
 export default function SignInForm() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState<'google' | 'github' | null>(null);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+
+  // Check for callbackUrl on mount to alert the user if they were redirected from a protected route
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const callback = params.get('callbackUrl');
+      if (callback) {
+        toast.error('প্রোফাইল বা বিস্তারিত দেখতে অনুগ্রহ করে সাইন ইন করুন');
+      }
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,15 +39,21 @@ export default function SignInForm() {
         callbackURL: '/',
       });
       if (res?.error) {
-        setError(res.error.message || 'ইমেইল বা পাসওয়ার্ড সঠিক নয়!');
+        const errorMsg = res.error.message || 'ইমেইল বা পাসওয়ার্ড সঠিক নয়!';
+        setError(errorMsg);
+        toast.error(errorMsg);
         setIsLoading(false);
       } else {
-        setMessage('সাইন ইন সফল হয়েছে!');
-        window.location.href = '/';
+        const successMsg = 'সাইন ইন সফল হয়েছে!';
+        setMessage(successMsg);
+        toast.success(successMsg);
+        router.push('/');
+        router.refresh();
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'সাইন ইন করতে সমস্যা হয়েছে';
       setError(msg);
+      toast.error(msg);
       setIsLoading(false);
     }
   };
@@ -49,6 +69,7 @@ export default function SignInForm() {
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google দিয়ে সাইন ইন করতে সমস্যা হয়েছে';
       setError(msg);
+      toast.error(msg);
       setSocialLoading(null);
     }
   };
@@ -64,6 +85,7 @@ export default function SignInForm() {
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'GitHub দিয়ে সাইন ইন করতে সমস্যা হয়েছে';
       setError(msg);
+      toast.error(msg);
       setSocialLoading(null);
     }
   };

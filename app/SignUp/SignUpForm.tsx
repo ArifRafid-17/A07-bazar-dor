@@ -2,9 +2,12 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { signUp, signIn } from '@/lib/auth-client';
 
 export default function SignUpForm() {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +23,9 @@ export default function SignUpForm() {
     setMessage('');
 
     if (password !== confirmPassword) {
-      setError('পাসওয়ার্ড মিলছে না!');
+      const pwdError = 'পাসওয়ার্ড মিলছে না!';
+      setError(pwdError);
+      toast.error(pwdError);
       return;
     }
 
@@ -33,15 +38,21 @@ export default function SignUpForm() {
         callbackURL: '/',
       });
       if (res?.error) {
-        setError(res.error.message || 'অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে');
+        const errorMsg = res.error.message || 'অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে';
+        setError(errorMsg);
+        toast.error(errorMsg);
         setIsLoading(false);
       } else {
-        setMessage('অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!');
-        window.location.href = '/';
+        const successMsg = 'অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!';
+        setMessage(successMsg);
+        toast.success(successMsg);
+        router.push('/');
+        router.refresh();
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে';
       setError(msg);
+      toast.error(msg);
       setIsLoading(false);
     }
   };
@@ -57,6 +68,7 @@ export default function SignUpForm() {
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google দিয়ে চালিয়ে যেতে সমস্যা হয়েছে';
       setError(msg);
+      toast.error(msg);
       setSocialLoading(null);
     }
   };
@@ -72,6 +84,7 @@ export default function SignUpForm() {
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'GitHub দিয়ে চালিয়ে যেতে সমস্যা হয়েছে';
       setError(msg);
+      toast.error(msg);
       setSocialLoading(null);
     }
   };
