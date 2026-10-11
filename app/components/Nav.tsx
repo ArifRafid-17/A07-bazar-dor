@@ -57,18 +57,18 @@ const NavBar = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-4">
-            <button
-              type="button"
+            <Link
+              href="/SignIn"
               className="text-sm font-medium text-gray-800 hover:text-[#168941] transition-colors cursor-pointer"
             >
               সাইন ইন
-            </button>
-            <button
-              type="button"
+            </Link>
+            <Link
+              href="/SignUp"
               className="text-sm font-medium text-white bg-[#168941] hover:bg-[#137437] px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
               সাইন আপ
-            </button>
+            </Link>
           </div>
 
         </div>
