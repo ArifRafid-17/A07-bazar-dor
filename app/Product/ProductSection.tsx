@@ -176,7 +176,8 @@ export const ProductSection: React.FC<ProductSectionProps> = ({ products }) => {
         )}
 
         {/* Section C: সব পণ্য */}
-        <section id="products" aria-labelledby="heading-all-products">
+        <section id="সব-পণ্য" aria-labelledby="heading-all-products" className="scroll-mt-6">
+          <span id="products" className="sr-only" />
           <div className="mb-4">
             <h2
               id="heading-all-products"

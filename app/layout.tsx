@@ -9,6 +9,7 @@ import Marquee from "./Marquee/Marquee";
 import { MarqueeSkeleton } from "./Marquee/MarqueeSkeleton";
 
 import Footer from "./components/footer";
+import ToastProvider from "./components/ToastProvider";
 
 const notoSerifBengali = Noto_Serif_Bengali({
   subsets: ["bengali", "latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${notoSerifBengali.variable} ${notoSerifBengali.className} h-full antialiased`}
     >
       <body className={`${notoSerifBengali.className} min-h-full flex flex-col bg-white text-gray-900`}>
+        <ToastProvider />
         <NavBar />
         <Suspense fallback={<CategorySkeleton />}>
           <NavCategory />

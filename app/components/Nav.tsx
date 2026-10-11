@@ -3,6 +3,7 @@
 import React, { useSyncExternalStore, useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { useSession, signOut } from '@/lib/auth-client';
 
 const emptySubscribe = () => () => {};
@@ -32,6 +33,7 @@ const NavBar = () => {
 
   const { data: session, isPending } = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [failedImage, setFailedImage] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,9 +50,11 @@ const NavBar = () => {
     setDropdownOpen(false);
     try {
       await signOut();
+      toast.success('সাইন আউট সফল হয়েছে!');
       window.location.href = '/';
     } catch (err) {
       console.error('Sign out error:', err);
+      toast.error('সাইন আউট করতে সমস্যা হয়েছে');
       window.location.href = '/';
     }
   };
@@ -59,7 +63,11 @@ const NavBar = () => {
     ? session.user.name.split(' ')[0]
     : 'প্রোফাইল';
 
-  const avatarSrc = '/default-avatar.jpg';
+  const userImage = session?.user?.image;
+  const avatarSrc =
+    userImage && failedImage !== userImage
+      ? userImage
+      : '/default-avatar.jpg';
 
   return (
     <nav className="w-full bg-white border-b border-gray-200">
@@ -105,6 +113,9 @@ const NavBar = () => {
                       width={36}
                       height={36}
                       unoptimized
+                      onError={() => {
+                        if (userImage) setFailedImage(userImage);
+                      }}
                       className="object-cover w-full h-full"
                     />
                   </div>

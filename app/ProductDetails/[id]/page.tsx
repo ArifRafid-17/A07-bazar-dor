@@ -15,23 +15,43 @@ export async function generateStaticParams() {
     const res = await fetch('https://openapi.programming-hero.com/api/bazardor/products');
     if (!res.ok) return [];
     const products: Product[] = await res.json();
-    return products.map((p) => ({
-      id: String(p.id),
-    }));
+    const list: { id: string }[] = [];
+    products.forEach((p) => {
+      list.push({ id: String(p.id) });
+      if (p.slug) {
+        list.push({ id: String(p.slug) });
+      }
+    });
+    return list;
   } catch {
     return [];
   }
 }
 
-async function getProduct(id: string): Promise<Product | null> {
+async function getProduct(idOrSlug: string): Promise<Product | null> {
   try {
-    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${id}`, {
+    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${idOrSlug}`, {
       next: { revalidate: 3600 },
     });
-    if (!res.ok) {
-      return null;
+    if (res.ok) {
+      return await res.json();
     }
-    return await res.json();
+
+    const allRes = await fetch('https://openapi.programming-hero.com/api/bazardor/products', {
+      next: { revalidate: 3600 },
+    });
+    if (!allRes.ok) return null;
+    const allProducts: Product[] = await allRes.json();
+    const matched = allProducts.find(
+      (p) => String(p.slug) === idOrSlug || String(p.id) === idOrSlug
+    );
+    if (!matched) return null;
+
+    const detailRes = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${matched.id}`, {
+      next: { revalidate: 3600 },
+    });
+    if (!detailRes.ok) return null;
+    return await detailRes.json();
   } catch (error) {
     console.error('Error fetching product details:', error);
     return null;

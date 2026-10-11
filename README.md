@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 বাজার দর (Bazar Dor) — নিত্যপণ্যের সঠিক দাম এক নজরে
 
-## Getting Started
+> **বাজার দর** হলো একটি আধুনিক, নির্ভরযোগ্য এবং ব্যবহারকারী-বান্ধব ওয়েব প্ল্যাটফর্ম যা ঢাকার বিভিন্ন বাজারের নিত্যপ্রয়োজনীয় পণ্যের (চাল, ডাল, তেল, সবজি, মাছ, মাংস, মসলা) সঠিক ও হালনাগাদ দরদাম সাধারণ মানুষের কাছে পৌঁছে দেয়।
 
-First, run the development server:
+---
 
+## 🔗 লিঙ্কসমূহ (Submission Links)
+- **লাইভ ওয়েবসাইট (Live Link):** [https://a07-bazar-dor.vercel.app](https://a07-bazar-dor.vercel.app) *(কিংবা আপনার ডিপ্লয়মেন্ট লিঙ্ক)*
+- **গিটহাব রিপোজিটরি (GitHub Repository):** [https://github.com/ArifRafid-17/A07-bazar-dor](https://github.com/ArifRafid-17/A07-bazar-dor)
+
+---
+
+## 🚀 মূল বৈশিষ্ট্যসমূহ (Key Features)
+
+### ১. 🔝 ইন্টারঅ্যাক্টিভ ও ডায়নামিক নেভিগেশন (Interactive Navbar & Marquee)
+- ফন্ট ও ব্র্যান্ডিং অনুযায়ী বাংলা তারিখ প্রদর্শন (`Intl.DateTimeFormat` দিয়ে স্বয়ংক্রিয় হালনাগাদ)।
+- অনুভূমিকভাবে স্ক্রোলযোগ্য ক্যাটাগরি বার এবং নির্বাচিত ক্যাটাগরির হাইলাইট স্টেট।
+- নেভবারের নিচে রিয়েল-টাইম ইনফিনিট স্ক্রোলিং প্রাইস টিকার (Marquee), যা পণ্যের নাম, আজকের দর এবং মূল্য ওঠানামার শতকরা হার প্রদর্শন করে।
+
+### ২. ⚖️ হোমপেজের পণ্যের শ্রেণীবিন্যাস (Product Analysis on Home Page)
+- **আজ দাম বেড়েছে ▲:** শীর্ষ ৬টি দাম বৃদ্ধি পাওয়া পণ্যের তালিকা (লাল ব্যাজসহ)।
+- **আজ দাম কমেছে ▼:** শীর্ষ ৬টি দাম কমা পণ্যের তালিকা (সবুজ ব্যাজসহ)।
+- **সব পণ্য:** প্রতিটি পণ্যের জন্য সুন্দর কার্ড যেখানে নাম, ইউনিট (`প্রতি কেজি/লিটার/ডজন`), আজকের দাম (বাংলা সংখ্যায়) এবং পরিবর্তন শতকরা ব্যাজ দেখা যায়।
+
+### ৩. 📊 বিস্তারিত পণ্যের পাতা (Protected Product Details Page — `/product/[slug]`)
+- সুরক্ষিত রুট — অননুমোদিত ব্যবহারকারীদের স্বয়ংক্রিয়ভাবে সাইন ইন পেজে রিডাইরেক্ট করে।
+- পণ্যের দরসংক্ষেপ: সর্বনিম্ন দাম, সর্বোচ্চ দাম ও সব বাজার মিলিয়ে গড় দাম।
+- বাজারভিত্তিক আজকের সম্ভাব্য দর: বিভিন্ন বাজারের নাম, এলাকা এবং মূল্য পরিসীমা স্পষ্ট টেবিল আকারে প্রদর্শন।
+
+### ৪. 🗂️ ক্যাটাগরি পাতা ও সংখ্যাভিত্তিক সাজানোর ব্যবস্থা (Category Page & Sorting — C1)
+- নির্দিষ্ট ক্যাটাগরির জন্য ডেডিকেটেড রুট (`/category/[slug]`) এবং লোডিং স্কেলিটন।
+- **সাজান (Sort control):** `ডিফল্ট`, `দাম: কম থেকে বেশি`, এবং `দাম: বেশি থেকে কম` — যা সংখ্যাগত মানের ওপর ভিত্তি করে সঠিকভাবে সর্ট করে।
+- ভুল বা খালি ক্যাটাগরি স্লাগের জন্য ইউজার-বান্ধব ৪০৪ এম্পটি স্টেট ও হোমপেজে ফিরে যাওয়ার বাটন।
+
+### ৫. 🔐 নিরাপদ প্রমাণীকরণ ও প্রোফাইল ব্যবস্থাপনা (Better Auth & Profile Management — C3)
+- **Better Auth** এর মাধ্যমে নিরাপদ ইমেইল/পাসওয়ার্ড এবং সোশ্যাল লগইন (Google & GitHub)।
+- **টোস্ট নোটিফিকেশন (`react-hot-toast`):** লগইন, রেজিস্ট্রেশন, লগআউট, ভ্যালিডেশন ত্রুটি এবং প্রটেক্টেড রুটের জন্য আকর্ষণীয় টোস্ট বার্তা।
+- **তথ্য আপডেট ফিচার (C3):** প্রোফাইল পেজ থেকে আলাদা রাউটে (`/Profile/update`) গিয়ে ব্যবহারকারীর নাম পরিবর্তনের সুযোগ।
+
+### ৬. 🚫 কাস্টম ৪০৪ ও লোডিং অভিজ্ঞতা (Custom 404 & Loading Skeletons)
+- যেকোনো ভুল বা অচেনা লিঙ্কের জন্য আধুনিক ইলস্ট্রেশন ও সার্চ বক্সসহ কাস্টম ৪০৪ পেজ (`not-found.tsx`)।
+- প্রতিটি ডাটা ফেচিং সেকশনে স্মুথ স্কেলিটন অ্যানিমেশন।
+
+---
+
+## 🛠️ ব্যবহৃত প্রযুক্তিসমূহ (Technologies Used)
+
+| প্রযুক্তি | ব্যবহার |
+|---|---|
+| **Next.js 16 (App Router)** | পূর্ণাঙ্গ ফ্রন্টএন্ড ফ্রেমওয়ার্ক এবং সার্ভার কম্পোনেন্টস |
+| **React 19** | ইন্টারঅ্যাক্টিভ ইউজার ইন্টারফেস ও কম্পোনেন্ট আর্কিটেকচার |
+| **TypeScript** | টাইপ-সেফ কোডবেস ও রিফ্যাক্টরিং নিরাপত্তা |
+| **Tailwind CSS v4** | আধুনিক ও রেসপনসিভ ইউআই ডিজাইন |
+| **Better Auth** | সেশন হ্যান্ডলিং, সোশ্যাল সাইন-ইন এবং প্রোফাইল আপডেট |
+| **MongoDB** | ব্যবহারকারী ও সেশন ডাটাবেজ স্টোরেজ |
+| **react-hot-toast** | রিয়েলটাইম টোস্ট নোটিফিকেশন |
+| **react-marquee-text** | ইনফিনিট মার্কেট প্রাইস টিকার |
+
+---
+
+## 💻 লোকাল মেশিনে রান করার নিয়ম (Getting Started)
+
+১. রিপোজিটরি ক্লোন করুন:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ArifRafid-17/A07-bazar-dor.git
+cd A07-bazar-dor
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+২. ডিপেন্ডেন্সি ইনস্টল করুন:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+৩. পরিবেশ ভেরিয়েবল কনফিগার করুন (`.env`):
+```env
+BETTER_AUTH_SECRET=your_auth_secret
+BETTER_AUTH_URL=http://localhost:3000
+MONGODB_URI=your_mongodb_connection_string
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+৪. ডেভেলপমেন্ট সার্ভার চালু করুন:
+```bash
+npm run dev
+```
 
-## Learn More
+ব্রাউজারে [http://localhost:3000](http://localhost:3000) ওপেন করে ওয়েবসাইটটি দেখুন।
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 ব্যবহৃত এপিআই এন্ডপয়েন্ট (API Endpoints)
+- **All Products:** `https://openapi.programming-hero.com/api/bazardor/products`
+- **Single Product:** `https://openapi.programming-hero.com/api/bazardor/products/:id`
+- **Categories:** `https://openapi.programming-hero.com/api/bazardor/categories`

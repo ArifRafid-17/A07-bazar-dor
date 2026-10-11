@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 
 export interface Category {
   id: string;
@@ -16,8 +16,12 @@ interface CategoryBarProps {
 }
 
 export const CategoryBar = ({ categories }: CategoryBarProps) => {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const activeSlug = searchParams.get('category');
+  const categoryFromPath = pathname?.startsWith('/category/')
+    ? pathname.replace('/category/', '')
+    : null;
+  const activeSlug = categoryFromPath || searchParams.get('category');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -78,7 +82,7 @@ export const CategoryBar = ({ categories }: CategoryBarProps) => {
             return (
               <Link
                 key={c.id}
-                href={`/?category=${c.slug}`}
+                href={`/category/${c.slug}`}
                 className={`group shrink-0 inline-flex items-center gap-2 px-3.5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer select-none active:scale-95 ${
                   isActive
                     ? 'bg-[#168941] text-white font-semibold shadow-sm shadow-[#168941]/25 ring-2 ring-[#168941]/20'
