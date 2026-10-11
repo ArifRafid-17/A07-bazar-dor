@@ -1,44 +1,32 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSession, signOut, updateUser } from '@/lib/auth-client';
 
 export default function ProfileClient() {
+  const router = useRouter();
   const { data: session, isPending } = useSession();
 
-  // Local state for editable name and status messages
-  const [name, setName] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [email, setEmail] = useState('');
-  const [avatar, setAvatar] = useState('/default-avatar.jpg');
+  // Derived user information from session with default fallbacks
+  const defaultName = session?.user?.name || (isPending ? '' : 'Rezwan Ahmed');
+  const [editedName, setEditedName] = useState<string | null>(null);
+  const [savedDisplayName, setSavedDisplayName] = useState<string | null>(null);
+
+  const name = editedName !== null ? editedName : defaultName;
+  const displayName = savedDisplayName ?? defaultName;
+  const email = session?.user?.email || (isPending ? '' : 'rezwanahmed@gmail.com');
+  const avatar = session?.user?.image || '/default-avatar.jpg';
+
   const [isUpdating, setIsUpdating] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Synchronize state when session loads or changes
-  useEffect(() => {
-    if (session?.user) {
-      const userFullName = session.user.name || 'Rezwan Ahmed';
-      setName(userFullName);
-      setDisplayName(userFullName);
-      setEmail(session.user.email);
-      if (session.user.image) {
-        setAvatar(session.user.image);
-      }
-    } else if (!isPending) {
-      // Default placeholder values matching the mockup if not signed in
-      setName('Rezwan Ahmed');
-      setDisplayName('Rezwan Ahmed');
-      setEmail('rezwanahmed@gmail.com');
-      setAvatar('/default-avatar.jpg');
-    }
-  }, [session, isPending]);
-
   // Handle name update submission
-  const handleUpdate = async (e: React.FormEvent) => {
+  const handleUpdate = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setSuccessMessage('');
     setErrorMessage('');
@@ -61,16 +49,15 @@ export default function ProfileClient() {
         if (res?.error) {
           setErrorMessage(res.error.message || 'নাম আপডেট করতে সমস্যা হয়েছে');
         } else {
-          setDisplayName(trimmedName);
+          setSavedDisplayName(trimmedName);
+          setEditedName(trimmedName);
           setSuccessMessage('নাম সফলভাবে আপডেট হয়েছে!');
-          // Force a slight delayed reload or router refresh so all components reflect the update
-          setTimeout(() => {
-            window.location.reload();
-          }, 800);
+          router.refresh();
         }
       } else {
         // Demo preview mode
-        setDisplayName(trimmedName);
+        setSavedDisplayName(trimmedName);
+        setEditedName(trimmedName);
         setSuccessMessage('নাম সফলভাবে আপডেট হয়েছে! (ডেমো মোড)');
       }
     } catch (err: unknown) {
@@ -86,10 +73,10 @@ export default function ProfileClient() {
     setIsSigningOut(true);
     try {
       await signOut();
-      window.location.href = '/SignIn';
+      router.push('/SignIn');
     } catch (err) {
       console.error('Sign out failed:', err);
-      window.location.href = '/SignIn';
+      router.push('/SignIn');
     } finally {
       setIsSigningOut(false);
     }
@@ -136,6 +123,7 @@ export default function ProfileClient() {
                   alt={displayName || 'User Profile'}
                   width={80}
                   height={80}
+                  unoptimized
                   className="object-cover w-full h-full"
                   priority
                 />
@@ -225,7 +213,7 @@ export default function ProfileClient() {
                 type="text"
                 required
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setEditedName(e.target.value)}
                 placeholder="আপনার নাম লিখুন"
                 className="w-full px-4 py-2.5 sm:py-3 rounded-xl border border-gray-200 text-sm sm:text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#168941]/25 focus:border-[#168941] transition-all bg-white"
               />

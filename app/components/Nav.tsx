@@ -59,7 +59,7 @@ const NavBar = () => {
     ? session.user.name.split(' ')[0]
     : 'প্রোফাইল';
 
-  const avatarSrc = session?.user?.image || '/default-avatar.jpg';
+  const avatarSrc = '/default-avatar.jpg';
 
   return (
     <nav className="w-full bg-white border-b border-gray-200">
@@ -104,6 +104,7 @@ const NavBar = () => {
                       alt={session.user.name || 'User'}
                       width={36}
                       height={36}
+                      unoptimized
                       className="object-cover w-full h-full"
                     />
                   </div>
